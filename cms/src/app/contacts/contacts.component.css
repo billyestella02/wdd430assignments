@@ -1,0 +1,13 @@
+.panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.h2 {
+    flex-grow: 9;
+}
+
+.btn {
+    flex-grow: 1;
+}
