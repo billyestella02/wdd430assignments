@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Document } from '../document.model';
 
 @Component({
@@ -7,9 +8,10 @@ import { Document } from '../document.model';
   styleUrls: ['./document-item.component.css']
 })
 export class DocumentItemComponent implements OnInit {
-  constructor() { }
-  ngOnInit(): void { }
-
   @Input('document-item') document!: Document;
 
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+   }
 }

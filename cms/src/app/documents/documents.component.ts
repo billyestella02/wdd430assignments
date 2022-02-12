@@ -10,7 +10,6 @@ import { DocumentService } from './document.service';
 })
 export class DocumentsComponent implements OnInit {
   constructor(private documentService: DocumentService) {
-
    }
 
   ngOnInit(): void {

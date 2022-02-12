@@ -11,4 +11,3 @@ export class Document {
         this.url = url;
     }
 }
-
