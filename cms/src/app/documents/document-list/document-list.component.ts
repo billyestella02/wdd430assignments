@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
 @Component({
@@ -8,6 +9,8 @@ import { DocumentService } from '../document.service';
 })
 export class DocumentListComponent implements OnInit {
   @Input() documents: Document[] = [];
+
+  subscription: Subscription;
   
   constructor(private documentService: DocumentService) { }
 
@@ -19,5 +22,15 @@ export class DocumentListComponent implements OnInit {
         this.documents = documents;
       }
     );
+
+    this.subscription = this.documentService.documentListChangedEvent.subscribe(
+      (documentsList: Document[]) => {
+        this.documents = documentsList;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
