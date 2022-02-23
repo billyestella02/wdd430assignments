@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Document } from './document.model';
 import { DocumentService } from './document.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-documents',
