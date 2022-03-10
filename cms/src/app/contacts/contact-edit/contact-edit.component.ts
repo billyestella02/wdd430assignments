@@ -55,8 +55,6 @@ export class ContactEditComponent implements OnInit {
     }
 
     this.router.navigateByUrl('/contacts');
-    console.log(value.group);
-    
   }
 
   onCancel() {

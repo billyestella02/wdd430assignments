@@ -2,6 +2,7 @@ import { Injectable, EventEmitter, Input } from '@angular/core';
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,10 +15,28 @@ export class ContactService {
 
   maxContactId!: number;
   
-  constructor() {
+  constructor(private http: HttpClient) {
     this.contacts = MOCKCONTACTS;
     this.maxContactId = this.getMaxId();
    }
+
+  storeContacts(contacts: Contact[]): any {
+    let contactsJSON = JSON.stringify(contacts);
+    const httpHeader = new HttpHeaders().set('content-type', 'application/json');
+
+    this.http
+      .put<Contact[]>(
+        'https://wdd430-cms-estella-default-rtdb.firebaseio.com/contacts.json', 
+        contactsJSON,
+        { headers: httpHeader})
+      .subscribe(() => {
+        let contactsClone = contacts.slice();
+        this.contactListChangedEvent.next(contactsClone);
+      }, (error: any) => {
+        console.log(error);
+      }
+    );
+  }
 
   getContacts(): Contact[] {
     return this.contacts.slice();
@@ -52,7 +71,7 @@ export class ContactService {
     newContact.id = this.maxContactId.toString();
     this.contacts.push(newContact);
     let contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts(contactsListClone);
   }
 
   updateContact(originalContact: Contact,newContact: Contact) {
@@ -68,7 +87,7 @@ export class ContactService {
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
     let contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts(contactsListClone);
   }
 
   deleteContact(contact: Contact) {
@@ -83,6 +102,6 @@ export class ContactService {
 
     this.contacts.splice(pos, 1);
     let contactsListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactsListClone);
+    this.storeContacts(contactsListClone);
   }
 }

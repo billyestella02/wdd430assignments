@@ -1,7 +1,21 @@
 .panel-heading {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+}
+
+.panel-heading :first-child {
+    width: 100%;
+}
+
+.panel-heading :not(:first-child) {
+    flex: 1;
+    margin: 5px;
+}
+
+input::placeholder {
+    font-size: 1.3rem;
 }
 
 .h2 {

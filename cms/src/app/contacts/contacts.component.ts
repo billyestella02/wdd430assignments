@@ -21,4 +21,8 @@ export class ContactsComponent implements OnInit {
     );
   }
 
+  search(value: any) {
+    
+  }
+
 }
